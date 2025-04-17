@@ -1,15 +1,7 @@
 services:
-  - type: web
-    name: caption-changer-bot
-    env: docker
+  - type: worker
+    name: caption-changer
+    env: python
     plan: free
-    dockerfilePath: ./Dockerfile
-    envVars:
-      - key: API_ID
-        sync: false
-      - key: API_HASH
-        sync: false
-      - key: BOT_TOKEN
-        sync: false
-      - key: FORCE_SUB_CHANNEL
-        sync: false
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 main.py

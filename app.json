@@ -1,24 +1,22 @@
 {
-  "name": "Caption Changer Bot",
-  "description": "Telegram bot to edit captions and enforce channel subscription.",
-  "repository": "https://github.com/nikhilsainikhe/Caption-changer",
-  "keywords": ["telegram", "bot", "caption", "heroku"],
+  "name": "CaptionChangerBot",
+  "description": "Telegram bot that modifies media captions",
   "env": {
     "API_ID": {
-      "description": "Telegram API ID from my.telegram.org",
+      "description": "Telegram API ID",
       "required": true
     },
     "API_HASH": {
-      "description": "Telegram API Hash from my.telegram.org",
+      "description": "Telegram API Hash",
       "required": true
     },
     "BOT_TOKEN": {
-      "description": "Bot token from BotFather",
+      "description": "Bot token from @BotFather",
       "required": true
     },
     "FORCE_SUB_CHANNEL": {
-      "description": "Channel invite link (e.g., https://t.me/+MnxII-5_qqY5ZjE1)",
-      "required": true
+      "description": "Channel username or ID to enforce subscription",
+      "required": false
     }
   },
   "buildpacks": [
