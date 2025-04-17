@@ -3,6 +3,7 @@ from pyrogram.types import Message
 from dotenv import load_dotenv
 from logs import logging
 import os
+from aiohttp import ClientSession, web
 
 load_dotenv()
 
@@ -11,6 +12,9 @@ API_HASH = os.getenv("API_HASH")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 app = Client("caption-changer-bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+
+# Define aiohttp routes
+routes = web.RouteTableDef()
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
