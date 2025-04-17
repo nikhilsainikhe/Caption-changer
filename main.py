@@ -63,52 +63,22 @@ async def stop_bot():
 words_to_delete = []
 words_to_replace = {}
 
-def process_caption_command(command, caption_text):
-    """
-    Process the /caption command to delete and replace words in the caption.
+@app.on_message(filters.command("setdelete"))
+async def set_delete_words(client, message: Message):
+    global words_to_delete
+    words_to_delete = message.text.split()[1:]
+    await message.reply(f"Words to delete set: {words_to_delete}")
 
-    Args:
-        command (str): The /caption command string containing delete and replace instructions.
-        caption_text (str): The original caption text to process.
-
-    Returns:
-        str: The modified caption text after processing.
-    """
-    if not command.startswith("/caption"):
-        raise ValueError("Invalid command format. Command must start with '/caption'.")
-
-    # Extract delete and replace parts
+@app.on_message(filters.command("setreplace"))
+async def set_replace_words(client, message: Message):
+    global words_to_replace
     try:
-        command_parts = command[len("/caption "):].split(" replace|")
-        delete_part = command_parts[0].replace("delete:", "").strip()
-        replace_part = command_parts[1] if len(command_parts) > 1 else ""
-
-        # Process delete
-        if delete_part:
-            words_to_delete = delete_part.split(",")
-            for word in words_to_delete:
-                caption_text = caption_text.replace(word, "")
-
-        # Process replace
-        if replace_part:
-            replace_pairs = replace_part.split(",")
-            for pair in replace_pairs:
-                word, replacement = pair.split(":")
-                caption_text = caption_text.replace(word, replacement)
-
-        # Return the processed caption
-        return caption_text.strip()
-
-    except Exception as e:
-        raise ValueError(f"Error processing command: {e}")
-
-
-# Example usage
-command = "/caption delete:word1,word2 replace|word1:replace1,word3:replace3"
-caption_text = "word1 is here, word2 is there, and word3 is everywhere."
-
-result = process_caption_command(command, caption_text)
-print(result)
+        parts = message.text.split(None, 2)[1].split("|")
+        key, val = parts[0].strip(), parts[1].strip()
+        words_to_replace[key] = val
+        await message.reply(f"Replacement set: '{key}' -> '{val}'")
+    except:
+        await message.reply("Format: /setreplace old|new")
 
 @app.on_message(filters.command("reset"))
 async def reset_filters(client, message: Message):
