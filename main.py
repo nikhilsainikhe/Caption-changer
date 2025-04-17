@@ -3,6 +3,7 @@ from pyrogram.types import Message
 from dotenv import load_dotenv
 from logs import logging
 import os
+import asyncio
 from aiohttp import ClientSession, web
 
 load_dotenv()
@@ -102,3 +103,5 @@ async def handle_media(client, message: Message):
 
 print("Bot is running...")
 app.run()
+if __name__ == "__main__":
+    asyncio.run(main())
